@@ -80,7 +80,7 @@ public class database extends javax.swing.JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        
+            //
         Date dt  =new Date();
         st = new SimpleDateFormat("hh:mm:ss a");
         
@@ -89,10 +89,10 @@ public class database extends javax.swing.JPanel {
         
         }
     });
-  
-    t.start();
-    
-    
+         
+       
+         t.start();
+       
     }
     
     
@@ -100,14 +100,12 @@ public class database extends javax.swing.JPanel {
      PreparedStatement pst;
      ResultSet rs;
     
-    
-    
-    
+     
      public void Connect()
      {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            
+                                                    
             try {
                con = (com.mysql.jdbc.Connection)DriverManager.getConnection("jdbc:mysql://localhost/simple_student","root","");
                String sql ="select id as 'ID', studentname as 'C_Name',fathername as 'F_Name',phone as 'Mobile',dateofbirth as 'Licence Issue Date',gender as 'Gender',class as 'BR_Nb',section as 'Section',admissiondate as 'Expire Date',cnic as 'NIC',email as 'Email',address as 'Adress' from student ";
@@ -139,13 +137,11 @@ public class database extends javax.swing.JPanel {
         txtfname = new javax.swing.JTextField();
         txtphone = new javax.swing.JTextField();
         txtemail = new javax.swing.JTextField();
-        txtdob = new com.toedter.calendar.JDateChooser();
         txtgender = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtsectionn = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
-        txtadddate = new com.toedter.calendar.JDateChooser();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -153,6 +149,8 @@ public class database extends javax.swing.JPanel {
         txtcnic = new javax.swing.JTextField();
         txtclass = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
+        txtadddate = new com.toedter.calendar.JDateChooser();
+        txtdob = new com.toedter.calendar.JDateChooser();
         l_date = new javax.swing.JLabel();
         l_time = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
@@ -246,7 +244,6 @@ public class database extends javax.swing.JPanel {
             }
         });
         jPanel2.add(txtemail, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 160, 240, -1));
-        jPanel2.add(txtdob, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 110, 220, -1));
 
         txtgender.setBackground(new java.awt.Color(204, 204, 204));
         txtgender.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
@@ -271,7 +268,6 @@ public class database extends javax.swing.JPanel {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Licence Issue Date");
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 90, -1, -1));
-        jPanel2.add(txtadddate, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 110, 230, -1));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -307,6 +303,8 @@ public class database extends javax.swing.JPanel {
             }
         });
         jPanel2.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -30, -1, 30));
+        jPanel2.add(txtadddate, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 110, 230, -1));
+        jPanel2.add(txtdob, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 110, 220, -1));
 
         add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 1090, 250));
 
@@ -346,7 +344,8 @@ public class database extends javax.swing.JPanel {
         add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 0, 230, 30));
     }// </editor-fold>//GEN-END:initComponents
             private void table_update()
-    {
+    {      
+        
         try {
             int c;
             try {
@@ -405,7 +404,7 @@ public class database extends javax.swing.JPanel {
 
         DefaultTableModel d1 = (DefaultTableModel) jTable1.getModel();
         int selectIndex = jTable1.getSelectedRow();
-
+            
         // Check if a row is selected
         if (selectIndex == -1) {
             return; // No row selected, do nothing
@@ -431,18 +430,22 @@ public class database extends javax.swing.JPanel {
 
         txtclass.setText(d1.getValueAt(selectIndex, 6).toString());
 
-        // Assuming txtsectionn is a JComboBox
+        // Assuming txtsectionn is a JComboBox  
         txtsectionn.setSelectedItem(d1.getValueAt(selectIndex, 7).toString());
-
+         
         // Assuming txtadddate is a JDateChooser (date picker)
-        try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            Date addDate = dateFormat.parse(d1.getValueAt(selectIndex, 8).toString());
-            txtadddate.setDate(addDate);
-        } catch (ParseException ex) {
-            // Handle parsing error
-            ex.printStackTrace();
+        try { 
+            
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                Date addDate = dateFormat.parse(d1.getValueAt(selectIndex, 8).toString()); 
+                txtadddate.setDate(addDate);
         }
+           catch (ParseException ex) 
+         { 
+           
+             // Handle parsing error 
+            ex.printStackTrace();
+         }
 
         txtcnic.setText(d1.getValueAt(selectIndex, 9).toString());
         txtemail.setText(d1.getValueAt(selectIndex, 10).toString());
@@ -470,16 +473,17 @@ public class database extends javax.swing.JPanel {
     private void txtphoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtphoneActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtphoneActionPerformed
-
+     
     private void txtemailKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtemailKeyReleased
 
     }//GEN-LAST:event_txtemailKeyReleased
-
+       
     private void jLabel21MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel21MouseClicked
         JFrame frame = new JFrame("EXIT");
         if(JOptionPane.showConfirmDialog(frame,"Do You Wish exit?","EXIT",JOptionPane.YES_NO_OPTION)==JOptionPane.YES_NO_OPTION)
         {
-            System.exit(0);
+            System.exit(0); 
+            
         }
     }//GEN-LAST:event_jLabel21MouseClicked
 
@@ -502,7 +506,7 @@ public class database extends javax.swing.JPanel {
     String candidateName = txtsname.getText();
     String fatherName = txtfname.getText();
     String mobile = txtphone.getText();
-
+   
     // Assuming txtdob is a JDateChooser (date picker)
     Date dob = txtdob.getDate();
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -513,7 +517,7 @@ public class database extends javax.swing.JPanel {
 
     // Assuming txtsectionn is a JComboBox
     String section = txtsectionn.getSelectedItem().toString();
-
+         
     // Assuming txtadddate is a JDateChooser (date picker)
     Date addDate = txtadddate.getDate();
     String addDateStr = dateFormat.format(addDate);
@@ -528,7 +532,7 @@ public class database extends javax.swing.JPanel {
 
         String updateQuery = "UPDATE student SET studentname=?, fathername=?, phone=?, dateofbirth=?, gender=?, class=?, section=?, admissiondate=?, cnic=?, email=?, address=? WHERE id=?";
         PreparedStatement pst = con.prepareStatement(updateQuery);
-
+         
         pst.setString(1, candidateName);
         pst.setString(2, fatherName);
         pst.setString(3, mobile);
@@ -570,15 +574,17 @@ private void clearFields() {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-
+        
+        
+        
         //Delete Button
         DefaultTableModel d1=(DefaultTableModel)jTable1.getModel();
         int selectIndex=jTable1.getSelectedRow();
-
+         
         int id=Integer.parseInt(d1.getValueAt(selectIndex,0).toString());
         int dialogResult=JOptionPane.showConfirmDialog(null,"Do you want delete the Record","Warning",JOptionPane.YES_NO_OPTION);
         if(dialogResult ==JOptionPane.YES_OPTION)
-        {
+        {  
             try {
                 Class.forName("com.mysql.jdbc.Driver");
                 con=DriverManager.getConnection("jdbc:mysql://localhost:3306/simple_student","root","");
@@ -608,7 +614,7 @@ private void clearFields() {
             } catch (SQLException ex) {
                 Logger.getLogger(database.class.getName()).log(Level.SEVERE, null, ex);
             }
-
+             
         }
 
         /* DefaultTableModel d1=(DefaultTableModel)jTable1.getModel();
@@ -658,11 +664,11 @@ private void clearFields() {
             JOptionPane.showMessageDialog(null, "Invalid.", "Error", JOptionPane.ERROR_MESSAGE);
         }
         else
-        {
+        {   
             txtphone.setEditable(true);
         }
     }//GEN-LAST:event_txtphoneKeyPressed
-
+                     
     private void txtphoneKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtphoneKeyTyped
         // TODO add your handling code here:
          // phn nb validating

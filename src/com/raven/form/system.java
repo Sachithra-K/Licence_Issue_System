@@ -34,6 +34,14 @@ import java.util.Properties;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import javax.mail.*;
+import javax.mail.internet.*;
+import javax.swing.*;
+import java.util.Properties;
+import java.util.concurrent.*;
+import com.sun.glass.events.KeyEvent;
+
+
 
 
 /**
@@ -103,11 +111,10 @@ public class system extends javax.swing.JPanel {
      
      
     @SuppressWarnings("unchecked")
-    
-       private static void sendEmail(String host, String user, String pass, String to, String subject, String message, Session mailSession) throws MessagingException {
+     private static void sendEmail(String host, String user, String pass, String toAddress, String subject, String message, Session mailSession) throws Exception {
         MimeMessage mimeMessage = new MimeMessage(mailSession);
         mimeMessage.setFrom(new InternetAddress(user));
-        mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
+        mimeMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(toAddress));
         mimeMessage.setSubject(subject);
         mimeMessage.setText(message);
 
@@ -116,6 +123,7 @@ public class system extends javax.swing.JPanel {
         transport.sendMessage(mimeMessage, mimeMessage.getAllRecipients());
         transport.close();
     }
+
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -325,12 +333,14 @@ public class system extends javax.swing.JPanel {
         // email validation
 
         //to send mail
-        
-           try {
+
+          
+
+        try {
             String host = "smtp.gmail.com";
             String user = "cscodes.lk@gmail.com";
-            String pass = "wauw bsuk jhbz imjl"; 
-            String toAddresses =txtemail.getText(); 
+            String pass = "wauw bsuk jhbz imjl";
+            String[] toAddresses = {txtemail.getText(), txtemail.getText(), txtemail.getText()};
 
             String[] subjects = {
                 "Environment Permit Issuing",
@@ -361,25 +371,50 @@ public class system extends javax.swing.JPanel {
             mailSession.setDebug(sessionDebug);
 
             ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-
-            for (int i = 0; i < subjects.length; i++) {
-                final int index = i;
-                executor.schedule(() -> {
-                    try {
-                        sendEmail(host, user, pass, toAddresses, subjects[index], messages[index], mailSession);
-                        JOptionPane.showMessageDialog(null, "Email " + (index + 1) + " sent.");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        JOptionPane.showMessageDialog(null, "Failed to send email " + (index + 1));
-                    }
-                }, i * 20, TimeUnit.SECONDS); // Send emails with delays of 0s, 20s, and 40s
-            }
+            
+            
+            executor.schedule(() -> {
+                try {
+                    sendEmail(host, user, pass, toAddresses[0], subjects[0], messages[0], mailSession);
+                    JOptionPane.showMessageDialog(null, "Registration Email sent.");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "Failed to send 1st email.");
+                }
+            }, 0, TimeUnit.SECONDS);
+            
+            
+            long delayForSecondEmail = TimeUnit.DAYS.toSeconds(2 * 365 + 10 * 30);
+            executor.schedule(() -> {
+                try {
+                    sendEmail(host, user, pass, toAddresses[1], subjects[1], messages[1], mailSession);
+                    //JOptionPane.showMessageDialog(null, "2nd Email sent.");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "Failed to send 2nd email.");
+                }
+            }, delayForSecondEmail, TimeUnit.SECONDS);
+         
+            // Send the 3rd email after 50 seconds
+            
+            long delayForThirdEmail = TimeUnit.DAYS.toSeconds(3 * 365);
+            executor.schedule(() -> {
+                try {
+                    sendEmail(host, user, pass, toAddresses[2], subjects[2], messages[2], mailSession);
+                   // JOptionPane.showMessageDialog(null, "3rd Email sent.");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "Failed to send 3rd email.");
+                }
+            }, delayForThirdEmail, TimeUnit.SECONDS);
 
             // Continue with other code here without waiting for the emails to be sent.
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Email sending failed.");
         }
+  
+
     
 
 

@@ -11,12 +11,12 @@ package com.raven.main;
  */
 import java.sql.*;
 import javax.swing.JOptionPane;
-public class register extends javax.swing.JPanel {
+public class register2 extends javax.swing.JPanel {
 
     /**
      * Creates new form register
      */
-    public register() {
+    public register2() {
         initComponents();
     }
 
