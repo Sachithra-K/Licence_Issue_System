@@ -352,7 +352,7 @@ public class system extends javax.swing.JPanel {
                 "Congratulations on your successful registration! Your license has been issued, and it is valid for a period of three years from the date of issue. Please make sure to renew your license before it expires to ensure uninterrupted access and usage.",
                 "Your license is about to expire within a 1 month. Please renew it to continue using our services. Thank you.",
                 "Your license has expired. Please renew it as soon as possible to regain access to our services."
-            };
+            }; 
 
             boolean sessionDebug = true;
             Properties props = System.getProperties();
